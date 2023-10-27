@@ -45,6 +45,25 @@ class Currency:
     if self.unit != "USD":
       res.changeTo("USD")
     return res
+  
+  def __sub__(self, other):
+    #All __sub__(self,other) type functions are parallel to __add__(self,other) type functions.
+    if type(other) == int or type(other) == float:
+      x = (other * Currency.currencies[self.unit])
+    else:
+      x = (other.value / Currency.currencies[other.unit] * Currency.currencies[self.unit])
+    return Currency(x - self.value, self.unit)
+  
+  def __isub__(self, other):
+    #__iadd__(self,other) 
+    return Currency.__sub__(self,other)
+  
+  def __rsub__(self, other):
+    #This method is similar to __add__(self,other), but occurs when an int or float tries to add a Currency object. (Treat the int/float as having a USD value.)
+    res = other - self.value 
+    if self.unit != "USD":
+      res.changeTo("USD")
+    return res
 
                 
       
