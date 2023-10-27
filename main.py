@@ -34,6 +34,17 @@ class Currency:
     else:
       x = (other.value / Currency.currencies[other.unit] * Currency.currencies[self.unit])
     return Currency(x + self.value, self.unit)
+  
+  def __iadd__(self, other):
+    #__iadd__(self,other) 
+    return Currency.__add__(self,other)
+  
+  def __radd__(self, other):
+    #This method is similar to __add__(self,other), but occurs when an int or float tries to add a Currency object. (Treat the int/float as having a USD value.)
+    res = self + other 
+    if self.unit != "USD":
+      res.changeTo("USD")
+    return res
 
                 
       
